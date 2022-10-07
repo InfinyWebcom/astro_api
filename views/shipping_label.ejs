@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title><%= title %></title>
+</head>
+
+<style>
+  body {
+    font-size: 8px !important;
+  }
+
+  .invoice-box {
+    max-width: 800px;
+    margin: auto;
+    padding: 30px;
+    border: 1px solid #eee;
+    font-size: 8px !important;
+    font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+    color: #555;
+  }
+
+  .invoice-box table {
+    width: 100%;
+    line-height: inherit;
+    text-align: left;
+  }
+
+  .invoice-box table tr.heading td {
+    padding: 5px;
+    vertical-align: top;
+  }
+
+  .invoice-box table tr.item td {
+    padding: 5px;
+    vertical-align: top;
+  }
+
+  /* .invoice-box table tr td:nth-child(2) {
+        text-align: right;
+    } */
+
+  .invoice-box table tr.top table td {
+    padding-bottom: 20px;
+  }
+
+  .invoice-box table tr.top table td.title {
+    font-size: 8px !important;
+    color: #333;
+  }
+
+  /* .invoice-box table tr.information table td {
+        padding-bottom: 40px;
+    } */
+
+  .invoice-box table tr.heading td {
+    background: #eee;
+    border-bottom: 1px solid #ddd;
+    font-weight: bold;
+    font-size: 8px !important;
+  }
+
+  /* .invoice-box table tr.details td {
+        padding-bottom: 20px;
+    } */
+
+  .invoice-box table tr.item td {
+    border-bottom: 1px solid #eee;
+    font-size: 8px !important;
+  }
+
+  .invoice-box table tr.item.last td {
+    border-bottom: none;
+    font-size: 8px !important;
+  }
+
+  /* .invoice-box table tr.total td:nth-child(2) {
+        border-top: 2px solid #eee;
+        font-weight: bold;
+    } */
+</style>
+
+<body>
+
+  <div class="invoice-box">
+
+    <div style="display: inline-flex; font-size: 18px;">
+      <span>
+        <img src="<%= base_url %>/images/logo.png"
+          style="width:100%; max-width: 150px; margin-left: -12px !important;" />
+      </span>
+      <span style="float: right; margin-top: 20px;">INVOICE</span>
+    </div>
+
+
+    <table cellpadding="0" cellspacing="0" style="margin-top: 25px;">
+      <tr>
+        <td>
+          <b>Billing Address:</b><br>
+          <%= billing_customer_name %><br>
+          <%= billing_address %><br>
+          <%= billing_city %><br>
+          <%= billing_pincode %><br>
+          <%= billing_state %><br>
+          <%= billing_country %><br>
+        </td>
+        <td style="text-align: right;">
+          Astrowize<br>
+          Mumbai, Maharashtra<br>
+          India<br>
+        </td>
+      </tr>
+    </table>
+
+
+    <div style="margin: 25px 0px 15px 0px;">
+      <b>Order Number:</b> <%= order_id %>
+      <br><b>Date:</b> <%= order_date %>
+    </div>
+
+
+    <table cellpadding="0" cellspacing="0">
+      <tr class="heading">
+        <td>
+          Sr. No.
+        </td>
+        <td>
+          Item
+        </td>
+        <td>
+          Qty
+        </td>
+        <td>
+          Unit Price
+        </td>
+        <td>
+          Total
+        </td>
+      </tr>
+
+      <% order_items.forEach((item, index) => { %>
+      <tr class="item">
+        <td>
+          <%= parseInt(index) + 1 %>.
+        </td>
+        <td>
+          <%= item.name %>
+        </td>
+        <td>
+          <%= item.units %>
+        </td>
+        <td>
+          ₹<%= (item.selling_price).toFixed(2) %>
+        </td>
+        <td>
+          ₹<%= (parseInt(item.selling_price) * parseInt(item.units)).toFixed(2) %>
+        </td>
+      </tr>
+      <% }); %>
+
+    </table>
+    <span style="float: right; margin: 10px;"><b>Total:</b>
+      ₹<%= parseInt(sub_total).toFixed(2) %>
+    </span>
+
+  </div>
+</body>
+
+</html>
